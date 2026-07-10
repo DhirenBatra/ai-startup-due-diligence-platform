@@ -5,3 +5,6 @@ xgboost
 matplotlib
 seaborn
 shap
+pdfplumber
+pytesseract
+PyMuPDF

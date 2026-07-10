@@ -1,0 +1,266 @@
+
+--- Page 1 (OCR) ---
+Pre-Seed
+
+Eleven
+
+Powering content in any language with automatic dubbing
+
+— Introduction sitet
+
+People want to listen to and watch content in their native language
+
+Traditionally achieved through
+dubbing - a post-production
+process where the original
+language of recording is swapped
+with audio recorded by human in
+a different language
+
+Expensive Long Process
+
+~$100/min >2 weeks
+
+—> Approximate dubbing cost including —> 10 minute video takes at least 2 weeks
+voice actors fee, post-production, and to dub. Involves multiple functions.
+studio cost Longer ones can take months!
+
+— Solution ‘iis inoinia
+
+Human quality automated dubbing as a SaaS
+
+Human Quality Personalized Simple & Quick
+
+Accessible through an E2E solution
+Saas that takes an input audio or
+video, and enables with a click of a
+
+Dubbing with your own voice
+For the first time training a
+deep-learning model that preserves
+your own voice across languages
+
+Preserving voice features
+Automated dubbing based on
+thousands of hours of professional
+
+dubbing - keeping the original button to do full dubbing -
+emotions, intonation & speakers human-in-the-loop is supported for
+performance improving quality even further
+
+—+ Problem ar Devi ie
+
+There are no affordable tools to
+make content watchable in any
+language with high quality.
+
+1. — Team 58 Fine ue Ld
+
+We have studied, lived and worked together. We are best friends since high-school.
+
+Piotr Dabkowski | CTO Mati Staniszewski | CEO
+ML Researcher Deploying Products at Scale
+
+Previously Machine Learning @ Google
+Computer Science at Cambridge & Oxford
+University
+
+Deployment Strategist @ Palantir
+Mathematics at Imperial College London
+
+; ; Experience at BlackRock & Opera Software -
+Deep-learning researcher - published a paper modelling usage and risk metrics
+at NeurlPS with >300 citations
+Founder of new communities - created
+Mathscon -— first Mathematics student led
+
+conference with +1000 students over 3 years
+
+Open-source work - created Js2Py with >250k
+downloads / month and other projects
+
+1 | —+ Vision ee
+
+Eleven’s automatic dubbing will power seamless communication and content across any language.
+
+Eleven Expansion Use-cases Users
+Fteal-timy dubbing @D
+aulematic language conversion across
+Onin WieO ated aco COmMeErs.atlons
+
+Real-time yoice conversion =
+
+online (arivecy protection, SS AT&T
+
+Cele apr eiatt on
+meliwerse
+
+hdhcoaietetnies moduli NETFLIX Sapo Maeve,
+highest quality automated dubbing
+in the Teatute movies,
+
+Localization & Advertising
+Axbwtr beemecity.
+language embedding im core tools
+
+LIOMB RIDGE Qenmarorre nc
+
+Offline voice generation
+ered ss - Adlon fa Apple
+podeasts audible Bln @ hs
+
+Automatic dubbing for creators ~
+Cemibent crpartorg,
+== Bioie FE 7
+eGaing software
+
+initial Focus
+
+im — Expanding Total Available Market 28 Eevee
+
+$2B $4.6B $24B
+
+Current yearly spent on game
+localization and movie
+dubbing - industry will disrupt
+
+Estimate for yearly TAM in for all
+professional content creators
+across podcasts and videos
+
+Localization, translation,
+interpreting total market
+
+| — Market Size Deep-dive - Content Creators 208d eka
+
+50M+
+Contents Creators Worldwide
+
+Total Available Market
+
+2M
+Professional Creators
+
+Serviceable Available Market
+
+9M minutes /month ——- $110M/ year
+
+100K
+YouTube creators with >500k subs
+Serviceable Obtainable Market
+
+Content created Revenue
+On average: 3 videos per month of Assuming just ~$1 dollar fee
+10 minutes length dubbed to 3 per minute of audio - actual
+languages model will include
+subscription with base set of
+convertible minutes
+
+10K
+
+Creators that
+upload captions
+
+Immediate Market
+
+— Our Start - Content Creators ideas ies isiaia
+
+MrBeast English channel subscribers MrBeast Spanish channel subscribers EU
+
+96M
+
+—> MrBeast is one of top 5 YouTube
+creators by subscribers, starting his
+career in early 2012
+
+19M
+
+— New channel started in 2021 with
+
+content dubbed professionally to
+Spanish. One video generates ~$50k!
+
+Key insights
+
+e Creators will explore the same model to reach
+more viewers & revenue
+
+e Quick dubbing process requirement but a lower
+quality bar
+
+e High volume data allows to improve speech &
+text datasets to build long term defensibility
+
+a
+
+— Traction & Feedback st esa
+
+Redacted
+
+11
+
+— Competition cate Bertani
+
+Human
+quality
+
+dubbing
+mS.
+
+Accessibility & speed
+
+Ameren bes
+
+—+ Timeline soa
+
+Redacted
+
+—+ Competitive Advantage - Research $3 ewe ar
+
+New way to automatically dub - preserves
+
+: ae. : Video
+speakers voice, emotion, intonation
+
+Speech
+
+e Instead of traditional Text-to-Speech
+approach we take both Speech and Text as
+an input to generate Speech in a new
+language - with state-of-the-art results. = [
+
+e Novel speech representation as a
+combination of: Speaker's voice
+
+o prosody (emotions, intonation) - a ; -
+sequence of per-phoneme, speaker - £ - _ | 7 - |
+independent annotations - based on )
+professional dubbing
+
+o speaker's voice - separate speaker
+embedding - based on thousands of |
+voices ; |
+
+Captions or
+
+Spat teke Speech-to-Text
+
+| Prosody
+intonation)
+
+Prosody
+mapping across Translation
+language
+7
+
+Speaker's voice
+transfer
+
+e Quick, affordable, generalizable - easy to Dubbing
+scale to new languages, where the end generation
+dubbing takes minutes instead of weeks \. / i
+
+Eleven
+
+Powering content in any language with automatic dubbing
+
