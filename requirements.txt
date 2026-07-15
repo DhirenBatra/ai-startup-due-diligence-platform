@@ -15,3 +15,4 @@ google-generativeai
 uvicorn
 sqlalchemy
 psycopg2-binary
+python-multipart

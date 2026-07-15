@@ -2,13 +2,23 @@
 
 import os
 import json
+import shutil
+import uuid
 import joblib
 import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 from openai import OpenAI
+
+from src.pdf_parser import (
+    extract_text_from_pdf,
+    extract_dollar_amounts,
+    extract_percentages,
+    extract_user_counts,
+    extract_team_mentions,
+)
 
 load_dotenv()
 
@@ -156,3 +166,25 @@ def generate_report(request: ReportRequest):
         report_text = response.choices[0].message.content
 
     return {"report": report_text}
+
+
+@app.post("/upload-pitch-deck")
+def upload_pitch_deck(file: UploadFile = File(...)):
+    temp_filename = f"data/temp_{uuid.uuid4().hex}.pdf"
+
+    with open(temp_filename, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    try:
+        raw_text = extract_text_from_pdf(temp_filename)
+
+        result = {
+            "dollar_amounts": extract_dollar_amounts(raw_text),
+            "percentages": extract_percentages(raw_text),
+            "scale_numbers": extract_user_counts(raw_text),
+            "team_mentions": extract_team_mentions(raw_text),
+        }
+    finally:
+        os.remove(temp_filename)
+
+    return result
