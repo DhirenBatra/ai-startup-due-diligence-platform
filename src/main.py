@@ -8,8 +8,9 @@ import joblib
 import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException, Depends
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 from openai import OpenAI
 
 from src.pdf_parser import (
@@ -19,6 +20,7 @@ from src.pdf_parser import (
     extract_user_counts,
     extract_team_mentions,
 )
+from src.database import get_db, Startup
 
 load_dotenv()
 
@@ -188,3 +190,17 @@ def upload_pitch_deck(file: UploadFile = File(...)):
         os.remove(temp_filename)
 
     return result
+
+
+@app.get("/startups")
+def list_startups(skip: int = 0, limit: int = 20, db: Session = Depends(get_db)):
+    startups = db.query(Startup).offset(skip).limit(limit).all()
+    return startups
+
+
+@app.get("/startups/{startup_id}")
+def get_startup(startup_id: int, db: Session = Depends(get_db)):
+    startup = db.query(Startup).filter(Startup.id == startup_id).first()
+    if startup is None:
+        raise HTTPException(status_code=404, detail="Startup not found")
+    return startup
