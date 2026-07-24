@@ -2,6 +2,7 @@
 
 import streamlit as st
 import requests
+import pandas as pd
 
 API_BASE_URL = "http://127.0.0.1:8000"
 
@@ -109,6 +110,11 @@ if page == "Predict Startup":
             st.success(f"Success Probability: {result['success_probability'] * 100:.1f}%")
 
             st.subheader("Top Contributing Factors")
+
+            factors_df = pd.DataFrame(result["top_factors"])
+            factors_df = factors_df.set_index("feature")
+            st.bar_chart(factors_df["shap_impact"])
+
             for factor in result["top_factors"]:
                 direction = "increases" if factor["shap_impact"] > 0 else "decreases"
                 st.write(f"**{factor['feature']}**: {factor['shap_impact']:.4f} ({direction} success likelihood)")
