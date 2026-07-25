@@ -34,10 +34,11 @@ MIN_TEXT_LENGTH = 100
 def extract_text_with_ocr(pdf_path: str, page_number: int) -> str:
     doc = fitz.open(pdf_path)
     page = doc[page_number - 1]
-    pix = page.get_pixmap(dpi=150)
+    pix = page.get_pixmap(dpi=100)
     img_bytes = pix.tobytes("png")
     image = Image.open(io.BytesIO(img_bytes))
     text = pytesseract.image_to_string(image)
+    image.close()
     doc.close()
     return text
 
