@@ -6,13 +6,90 @@ import pandas as pd
 
 API_BASE_URL = "http://127.0.0.1:8000"
 
-st.set_page_config(page_title="AI Startup Due Diligence Platform", layout="wide")
+st.set_page_config(
+    page_title="AI Startup Due Diligence Platform",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+st.markdown("""
+<style>
+[data-testid="stAppViewContainer"] {
+    background: linear-gradient(135deg, #F5F3FF 0%, #E0E7FF 50%, #FCE7F3 100%);
+}
+
+[data-testid="stHeader"] {
+    background: transparent;
+}
+
+h1 {
+    background: linear-gradient(90deg, #7C3AED, #DB2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+h2, h3 {
+    color: #6D28D9;
+}
+
+[data-testid="stForm"] {
+    background-color: #FFFFFF;
+    padding: 25px;
+    border-radius: 15px;
+    border: 2px solid #C4B5FD;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+}
+
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #DDD6FE 0%, #FBCFE8 100%);
+}
+
+[data-testid="stMetric"] {
+    background: linear-gradient(135deg, #8B5CF6, #DB2777);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+[data-testid="stMetric"] label {
+    color: #F5F3FF !important;
+}
+
+[data-testid="stMetric"] div {
+    color: #FFFFFF !important;
+}
+
+.stButton button, .stFormSubmitButton button {
+    background: linear-gradient(90deg, #8B5CF6, #DB2777);
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    padding: 10px 24px;
+}
+
+.stButton button:hover, .stFormSubmitButton button:hover {
+    background: linear-gradient(90deg, #7C3AED, #BE185D);
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+[data-testid="stDataFrame"] {
+    border-radius: 10px;
+    overflow: hidden;
+}
+</style>
+""", unsafe_allow_html=True)
 
 st.title("AI Startup Due Diligence Platform")
 st.write("Upload a pitch deck or enter startup metrics to get an ML-driven success prediction and an AI-generated due diligence report.")
 
 st.sidebar.title("Navigation")
+st.sidebar.write("AI-powered startup evaluation using ML predictions, SHAP explainability, and LLM-generated reports.")
+st.sidebar.divider()
 page = st.sidebar.radio("Go to", ["Predict Startup", "Upload Pitch Deck", "History"])
+st.sidebar.divider()
+st.sidebar.caption("Built with FastAPI, scikit-learn, XGBoost, SHAP, and OpenRouter LLM integration.")
 
 if page == "Predict Startup":
     st.header("Predict Startup Success")
@@ -107,7 +184,21 @@ if page == "Predict Startup":
             st.session_state["last_prediction"] = result
             st.session_state["last_payload"] = payload
 
-            st.success(f"Success Probability: {result['success_probability'] * 100:.1f}%")
+            probability_pct = result['success_probability'] * 100
+
+            metric_col1, metric_col2, metric_col3 = st.columns(3)
+            with metric_col1:
+                st.metric(label="Success Probability", value=f"{probability_pct:.1f}%")
+            with metric_col2:
+                if probability_pct >= 70:
+                    verdict = "Strong"
+                elif probability_pct >= 40:
+                    verdict = "Moderate"
+                else:
+                    verdict = "Weak"
+                st.metric(label="Verdict", value=verdict)
+            with metric_col3:
+                st.metric(label="Top Factor", value=result["top_factors"][0]["feature"])
 
             st.subheader("Top Contributing Factors")
 
