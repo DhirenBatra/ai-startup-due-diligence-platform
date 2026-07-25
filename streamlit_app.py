@@ -199,4 +199,26 @@ elif page == "Upload Pitch Deck":
 
 elif page == "History":
     st.header("Startup History")
-    st.write("This section will be built next.")
+    st.write("Browse previously stored startup records from the database.")
+
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        page_number = st.number_input("Page", min_value=1, value=1, step=1)
+
+    rows_per_page = 20
+    skip = (page_number - 1) * rows_per_page
+
+    with st.spinner("Loading records..."):
+        history_response = requests.get(f"{API_BASE_URL}/startups", params={"skip": skip, "limit": rows_per_page})
+
+    if history_response.status_code == 200:
+        startups = history_response.json()
+
+        if len(startups) == 0:
+            st.info("No more records to show.")
+        else:
+            df = pd.DataFrame(startups)
+            st.dataframe(df, use_container_width=True)
+            st.caption(f"Showing records {skip + 1} to {skip + len(startups)}")
+    else:
+        st.error(f"Failed to load history: {history_response.text}")
