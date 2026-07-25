@@ -4,8 +4,9 @@ import streamlit as st
 import requests
 import pandas as pd
 import plotly.graph_objects as go
+import os
 
-API_BASE_URL = "http://127.0.0.1:8000"
+API_BASE_URL = os.getenv("API_BASE_URL", "http://127.0.0.1:8000")
 
 FEATURE_LABELS = {
     "age_first_funding_year": "Years to First Funding",

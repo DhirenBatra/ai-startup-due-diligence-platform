@@ -23,7 +23,10 @@ Image.MAX_IMAGE_PIXELS = None
 
 PDF_PATH = "data/sample_pitch_deck.pdf"
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+import platform
+
+if platform.system() == "Windows":
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 MIN_TEXT_LENGTH = 100
 
