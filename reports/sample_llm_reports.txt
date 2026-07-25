@@ -1,0 +1,101 @@
+
+============================================================
+STARTUP ROW INDEX: 0
+============================================================
+## Risk Summary  
+The startup shows a moderate success probability of **70.7%**, indicating reasonable potential but also notable risks. The absence of venture capital involvement and low participant engagement (average 1.0) temper optimism, while the company’s location in California and recent milestones provide some offsetting strength.
+
+## Strengths  
+- **Experienced milestone timeline**: The timing of the last (3.00 years) and first (2.25 years) milestones demonstrates steady progress and operational maturity.  
+- **Angel investor backing**: Presence of an angel investor (has_angel = 1.0) suggests early validation and potential mentorship.  
+- **Calgary‑based operations**: Located in California (is_CA = 1.0), offering access to a strong tech ecosystem and talent pool.  
+- **Funding attained**: Secured $375 K across three funding rounds, reflecting investor confidence despite the modest amount.
+
+## Red Flags  
+- **Not a top‑500 company**: The is_top500 flag (SHAP impact = ‑0.0526) suggests limited scale or recognition relative to industry leaders.  
+- **Low average participant count**: avg_participants = 1.0 may indicate limited network reach or partnership depth.  
+- **Categorized as “other”**: is_othercategory = 1.0 means the startup does not fit standard sector classifications, raising questions about focus and market positioning.  
+- **No venture capital backing**: has_VC = 0.0 could imply reliance on angel capital alone, potentially limiting growth capital.
+
+## Recommendation  
+Given the solid milestone history and clear funding traction, I recommend **Proceed with Caution**, pending further due diligence on the other‑category business model and participant engagement.
+
+============================================================
+STARTUP ROW INDEX: 10
+============================================================
+## Risk Summary
+Overall risk is moderate, as the ML model assigns a 75.5% success probability indicating reasonably favorable odds but meaningful downside. This assessment is shaped by strong relational and milestone signals offset by thin investor participation and an extended period to last funding.
+
+## Strengths
+- Robust network: 22 relationships yield a positive SHAP impact of +0.0574 on success likelihood.
+- Milestone timing: Age at first milestone (10.13 yrs) and last milestone (10.65 yrs) contribute positively (SHAP +0.0251 and +0.0686 respectively), showing sustained development.
+- Traction indicators: $27.5M raised across 3 rounds (Round A and B completed) and top-500 status (is_top500=1) reflect measurable market validation.
+
+## Red Flags
+- Low syndicate breadth: avg_participants of 1.0 is the top negative driver (SHAP -0.0866), suggesting limited co-investor interest per round.
+- Extended funding timeline: age_last_funding_year of 9.45 yrs carries a negative SHAP impact (-0.0216), indicating slower capital accession.
+- Absence of institutional backing: has_VC=0 and has_angel=0 despite completed A/B rounds is a concerning data point for external validation.
+
+## Recommendation
+We recommend Proceed with Caution, given the solid 75.5% model success probability but notable gaps in investor participation and institutional support that warrant further diligence.
+
+============================================================
+STARTUP ROW INDEX: 50
+============================================================
+## Risk Summary  
+The model estimates a 66 % probability of success, indicating moderate upside potential. However, the relatively low average participant count and limited funding history introduce notable uncertainty that warrants caution.
+
+## Strengths  
+- Early milestone achievement (age = 2.0 years) boosts the likelihood of traction.  
+- Strong relationship network (5 contacts) enhances strategic alignment.  
+- Ranking in the top 500 startups signals broader market credibility.  
+- Secured $3 M across one round demonstrates initial investor confidence.
+
+## Red Flags  
+- Only one participant in the cohort may signal limited validation or market reach.  
+- Single funding round limits capital depth and may constrain scaling opportunities.  
+- Absence of VC or angel backing raises concerns about external endorsement.  
+
+## Recommendation  
+Proceed with Caution, subject to a deeper assessment of market traction and future funding strategy.
+
+============================================================
+STARTUP ROW INDEX: 100
+============================================================
+## Risk Summary  
+The startup has a low 24.7% success probability, indicating high risk. Key concerns include no milestones, an unusually long age (20.8 years) without meaningful progress indicators, and a lack of traditional funding sources (no VC/angel backing or A-round history).  
+
+## Strengths  
+- **Substantial funding**: $32M total funding (SHAP impact: +0.059) provides financial runway.  
+- **Software categorization**: Operates in the software sector, a high-growth industry.  
+- **Top 500 status**: Listed in a top 500 company, suggesting recognition or scale.  
+- **B-round participation**: Involvement in later-stage funding (SHAP impact: -0.0842) may signal investor confidence.  
+
+## Red Flags  
+- **No milestones**: Zero milestones (SHAP impact: -0.0933) suggest no measurable progress or validation.  
+- **Low relationships**: Only 2 relationships (SHAP impact: -0.1191) indicate limited strategic or customer partnerships.  
+- **Unconventional funding history**: 20.8 years of operation without A-round experience or VC/angel involvement raises concerns about growth trajectory.  
+- **Geographic isolation**: Located in a non-traditional tech hub (is_otherstate: 1.0), potentially limiting talent access.  
+
+## Recommendation  
+**Pass**. The combination of no milestones, low relationships, and an atypical funding structure outweigh the positive impact of substantial capital and software sector exposure, resulting in a high-risk profile.
+
+============================================================
+STARTUP ROW INDEX: 200
+============================================================
+## Risk Summary
+Overall risk is moderate, as the model predicts a 74.1% success probability—indicating reasonably favorable odds but meaningful downside remains. This balanced profile reflects strong milestone and network signals partially offset by early-stage funding concentration.
+
+## Strengths
+- **Milestone progression**: The last milestone occurred at company age 1.68 years (SHAP +0.0364), showing continued development beyond initial funding.
+- **Broad participant engagement**: Average participants of 9.0 (SHAP +0.0335) suggests substantial interest or co-investor involvement per round.
+- **Milestone volume**: A count of 3.0 milestones (SHAP +0.0315) provides tangible evidence of executed business checkpoints.
+- **Relationship capital**: 5.0 relationships (SHAP +0.0293) indicate an established external network supportive of growth.
+
+## Red Flags
+- **Early last-funding age**: Age at last funding is only 0.47 years (SHAP -0.0381), reducing success likelihood and signaling a very early capital event.
+- **Single round, no institutional backing**: Funding rounds = 1, has_VC = 0, has_angel = 0, and no Round A–D flags show a lack of follow-on or professional investor validation.
+- **Funding–milestone timing gap**: Since age_last_funding_year (0.47) equals age_first_funding_year and is far below age_last_milestone_year (1.68), the startup has achieved later milestones without recorded additional financing.
+
+## Recommendation
+We recommend Proceeding with Caution. The 74.1% success probability and operational strengths support further engagement, but the thin, early-stage funding profile requires deeper capital-structure diligence before final commitment.
