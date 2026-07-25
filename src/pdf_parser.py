@@ -34,14 +34,27 @@ MIN_TEXT_LENGTH = 100
 def extract_text_with_ocr(pdf_path: str, page_number: int) -> str:
     doc = fitz.open(pdf_path)
     page = doc[page_number - 1]
-    pix = page.get_pixmap(dpi=72)
-    img_bytes = pix.tobytes("png")
-    image = Image.open(io.BytesIO(img_bytes))
-    text = pytesseract.image_to_string(image)
-    image.close()
-    doc.close()
-    return text
 
+    page_rect = page.rect
+    strip_height = 2000  # points, processed in chunks to limit peak memory
+    full_text = ""
+
+    y = 0
+    while y < page_rect.height:
+        clip_rect = fitz.Rect(0, y, page_rect.width, min(y + strip_height, page_rect.height))
+        pix = page.get_pixmap(dpi=100, clip=clip_rect, colorspace=fitz.csGRAY)
+        img_bytes = pix.tobytes("png")
+        image = Image.open(io.BytesIO(img_bytes))
+
+        strip_text = pytesseract.image_to_string(image)
+        full_text += strip_text + "\n"
+
+        image.close()
+        pix = None
+        y += strip_height
+
+    doc.close()
+    return full_text
 
 def extract_text_from_pdf(path: str) -> str:
     full_text = ""
