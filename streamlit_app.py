@@ -3,14 +3,50 @@
 import streamlit as st
 import requests
 import pandas as pd
+import plotly.graph_objects as go
 
 API_BASE_URL = "http://127.0.0.1:8000"
+
+FEATURE_LABELS = {
+    "age_first_funding_year": "Years to First Funding",
+    "age_last_funding_year": "Years to Last Funding",
+    "age_first_milestone_year": "Years to First Milestone",
+    "age_last_milestone_year": "Years to Last Milestone",
+    "relationships": "Relationships",
+    "funding_rounds": "Funding Rounds",
+    "funding_total_usd": "Total Funding (USD)",
+    "milestones": "Milestones Achieved",
+    "is_CA": "Based in California",
+    "is_NY": "Based in New York",
+    "is_MA": "Based in Massachusetts",
+    "is_TX": "Based in Texas",
+    "is_otherstate": "Based in Other State",
+    "is_software": "Software Category",
+    "is_web": "Web Category",
+    "is_mobile": "Mobile Category",
+    "is_enterprise": "Enterprise Category",
+    "is_advertising": "Advertising Category",
+    "is_gamesvideo": "Games/Video Category",
+    "is_ecommerce": "E-commerce Category",
+    "is_biotech": "Biotech Category",
+    "is_consulting": "Consulting Category",
+    "is_othercategory": "Other Category",
+    "has_VC": "VC Backing",
+    "has_angel": "Angel Backing",
+    "has_roundA": "Completed Round A",
+    "has_roundB": "Completed Round B",
+    "has_roundC": "Completed Round C",
+    "has_roundD": "Completed Round D",
+    "avg_participants": "Avg Participants per Round",
+    "is_top500": "Top 500 Startup Status",
+}
 
 st.set_page_config(
     page_title="AI Startup Due Diligence Platform",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
 st.markdown("""
 <style>
 [data-testid="stAppViewContainer"] {
@@ -186,29 +222,66 @@ if page == "Predict Startup":
 
             probability_pct = result['success_probability'] * 100
 
-            metric_col1, metric_col2, metric_col3 = st.columns(3)
-            with metric_col1:
-                st.metric(label="Success Probability", value=f"{probability_pct:.1f}%")
-            with metric_col2:
-                if probability_pct >= 70:
-                    verdict = "Strong"
-                elif probability_pct >= 40:
-                    verdict = "Moderate"
-                else:
-                    verdict = "Weak"
+            if probability_pct >= 70:
+                verdict = "Strong"
+                gauge_color = "#059669"
+            elif probability_pct >= 40:
+                verdict = "Moderate"
+                gauge_color = "#D97706"
+            else:
+                verdict = "Weak"
+                gauge_color = "#DC2626"
+
+            gauge_col, side_col = st.columns([2, 1])
+
+            with gauge_col:
+                fig = go.Figure(go.Indicator(
+                    mode="gauge+number",
+                    value=probability_pct,
+                    number={'suffix': "%", 'font': {'size': 40}},
+                    gauge={
+                        'axis': {'range': [0, 100]},
+                        'bar': {'color': gauge_color},
+                        'steps': [
+                            {'range': [0, 40], 'color': "#FEE2E2"},
+                            {'range': [40, 70], 'color': "#FEF3C7"},
+                            {'range': [70, 100], 'color': "#D1FAE5"},
+                        ],
+                    },
+                    title={'text': "Success Probability"}
+                ))
+                fig.update_layout(height=280, margin=dict(l=20, r=20, t=50, b=20))
+                st.plotly_chart(fig, use_container_width=True)
+
+            with side_col:
                 st.metric(label="Verdict", value=verdict)
-            with metric_col3:
-                st.metric(label="Top Factor", value=result["top_factors"][0]["feature"])
+                top_feature_raw = result["top_factors"][0]["feature"]
+                st.metric(label="Top Factor", value=FEATURE_LABELS.get(top_feature_raw, top_feature_raw))
 
             st.subheader("Top Contributing Factors")
 
             factors_df = pd.DataFrame(result["top_factors"])
-            factors_df = factors_df.set_index("feature")
-            st.bar_chart(factors_df["shap_impact"])
+            factors_df["readable_feature"] = factors_df["feature"].map(lambda f: FEATURE_LABELS.get(f, f))
+            bar_colors = ["#059669" if val > 0 else "#DC2626" for val in factors_df["shap_impact"]]
+
+            fig_bar = go.Figure(go.Bar(
+                x=factors_df["readable_feature"],
+                y=factors_df["shap_impact"],
+                marker_color=bar_colors
+            ))
+            fig_bar.update_layout(
+                height=350,
+                margin=dict(l=20, r=20, t=20, b=20),
+                yaxis_title="SHAP Impact",
+                plot_bgcolor="rgba(0,0,0,0)",
+                paper_bgcolor="rgba(0,0,0,0)"
+            )
+            st.plotly_chart(fig_bar, use_container_width=True)
 
             for factor in result["top_factors"]:
                 direction = "increases" if factor["shap_impact"] > 0 else "decreases"
-                st.write(f"**{factor['feature']}**: {factor['shap_impact']:.4f} ({direction} success likelihood)")
+                readable_name = FEATURE_LABELS.get(factor["feature"], factor["feature"])
+                st.write(f"**{readable_name}**: {factor['shap_impact']:.4f} ({direction} success likelihood)")
         else:
             st.error(f"Prediction failed: {response.text}")
 
@@ -227,7 +300,33 @@ if page == "Predict Startup":
             if report_response.status_code == 200:
                 report_text = report_response.json()["report"]
                 st.subheader("Due Diligence Report")
-                st.markdown(report_text)
+
+                sections = {"Risk Summary": "", "Strengths": "", "Red Flags": "", "Recommendation": ""}
+                current_section = None
+                for line in report_text.split("\n"):
+                    stripped = line.strip().lstrip("#").strip()
+                    if stripped in sections:
+                        current_section = stripped
+                    elif current_section:
+                        sections[current_section] += line + "\n"
+
+                st.markdown(f"**Risk Summary**\n\n{sections['Risk Summary']}")
+
+                col_strength, col_flags = st.columns(2)
+                with col_strength:
+                    st.markdown(
+                        f"<div style='background-color:#D1FAE5; padding:15px; border-radius:10px;'>"
+                        f"<h4 style='color:#065F46;'>Strengths</h4>{sections['Strengths']}</div>",
+                        unsafe_allow_html=True
+                    )
+                with col_flags:
+                    st.markdown(
+                        f"<div style='background-color:#FEE2E2; padding:15px; border-radius:10px;'>"
+                        f"<h4 style='color:#991B1B;'>Red Flags</h4>{sections['Red Flags']}</div>",
+                        unsafe_allow_html=True
+                    )
+
+                st.markdown(f"**Recommendation**\n\n{sections['Recommendation']}")
             else:
                 st.error(f"Report generation failed: {report_response.text}")
 
