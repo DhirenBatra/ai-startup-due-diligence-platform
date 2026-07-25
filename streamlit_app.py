@@ -142,7 +142,60 @@ if page == "Predict Startup":
 
 elif page == "Upload Pitch Deck":
     st.header("Upload Pitch Deck")
-    st.write("This section will be built next.")
+    st.write("Upload a PDF pitch deck to extract key figures and team information.")
+
+    uploaded_file = st.file_uploader("Choose a PDF file", type=["pdf"])
+
+    if uploaded_file is not None:
+        if st.button("Extract Data"):
+            with st.spinner("Extracting text and running OCR if needed... this may take up to a minute"):
+                files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "application/pdf")}
+                extract_response = requests.post(f"{API_BASE_URL}/upload-pitch-deck", files=files)
+
+            if extract_response.status_code == 200:
+                st.session_state["extracted_data"] = extract_response.json()
+                st.success("Extraction complete.")
+            else:
+                st.error(f"Extraction failed: {extract_response.text}")
+
+    if "extracted_data" in st.session_state:
+        data = st.session_state["extracted_data"]
+
+        st.subheader("Extracted Data (editable)")
+        st.write("Review and correct any values below if the automatic extraction made mistakes.")
+
+        dollar_amounts_text = st.text_area(
+            "Dollar Amounts (one per line)",
+            value="\n".join(data["dollar_amounts"]),
+            height=150
+        )
+
+        percentages_text = st.text_area(
+            "Percentages (one per line)",
+            value="\n".join(data["percentages"]),
+            height=100
+        )
+
+        scale_numbers_text = st.text_area(
+            "Scale Numbers, e.g. users or market size (one per line)",
+            value="\n".join(data["scale_numbers"]),
+            height=100
+        )
+
+        team_mentions_text = st.text_area(
+            "Team Mentions (one per line)",
+            value="\n".join(data["team_mentions"]),
+            height=100
+        )
+
+        if st.button("Save Corrections"):
+            st.session_state["extracted_data"] = {
+                "dollar_amounts": [line.strip() for line in dollar_amounts_text.split("\n") if line.strip()],
+                "percentages": [line.strip() for line in percentages_text.split("\n") if line.strip()],
+                "scale_numbers": [line.strip() for line in scale_numbers_text.split("\n") if line.strip()],
+                "team_mentions": [line.strip() for line in team_mentions_text.split("\n") if line.strip()],
+            }
+            st.success("Corrections saved.")
 
 elif page == "History":
     st.header("Startup History")
